@@ -47,24 +47,24 @@ Aguva Ussd is a modern multi-language (english and swahili) laravel dynamic ussd
 N/B Treat each a method as a new USSD screen instance
 
     <?php
-    namespace App\Repositories;
-    use Aguva\Ussd\Repositories\Handler;
+namespace App\Repositories;
+use Aguva\Ussd\Repositories\Handler;
 
     class UssdProcessor
     {
         // Distinguish if it's a new user (first dial) or a registered user
-        static function activityHome(ActivityLibrary $activityLibrary, $params)
+        static function activityHome(Handler $handler, $params)
         {
-            if (array_key_exists('newUser', $activityLibrary->userInput) && $activityLibrary->userInput['newUser']) {
-                return self::activityHomeNewUser($activityLibrary, $params);
+            if (array_key_exists('newUser', $handler->userInput) && $handler->userInput['newUser']) {
+                return self::activityHomeNewUser($handler, $params);
             }
-            return self::activityHomeExistingUser($activityLibrary, $params);
+            return self::activityHomeExistingUser($handler, $params);
         }
     
         // This is an existing user
-        static function activityHomeExistingUser(ActivityLibrary $activityLibrary, $params)
+        static function activityHomeExistingUser(Handler $handler, $params)
         {
-            $activityLibrary->message = __('ussd.welcome_new_user', ['name' => $activityLibrary->user->first_name]);
+            $handler->message = __('ussd.welcome_new_user', ['name' => $handler->user->first_name]);
             $menu = [
                 1 => [
                     'text' => __('ussd.item_home'),
@@ -79,14 +79,14 @@ N/B Treat each a method as a new USSD screen instance
                     'activity' => 'activityQuit',
                 ]
             ];
-            $activityLibrary->menuItems = $menu;
-            return self::activityReturnValidMessage($activityLibrary);
+            $handler->menuItems = $menu;
+            return self::activityReturnValidMessage($handler);
         }
     
         // This is a new user
-        static function activityHomeNewUser(ActivityLibrary $activityLibrary, $params)
+        static function activityHomeNewUser(Handler $handler, $params)
         {
-            $activityLibrary->message = __('ussd.welcome_registered_user', ['name' => '']);
+            $handler->message = __('ussd.welcome_registered_user', ['name' => '']);
             $menu = [
                 1 => [
                     'text' => __('ussd.item_choose_language'),
@@ -98,26 +98,26 @@ N/B Treat each a method as a new USSD screen instance
                 ]
             ];
     
-            $activityLibrary->menuItems = $menu;
-            return self::activityReturnValidMessage($activityLibrary);
+            $handler->menuItems = $menu;
+            return self::activityReturnValidMessage($handler);
         }
     
         // Exit the application
-        static function activityQuit(ActivityLibrary $activityLibrary, $params)
+        static function activityQuit(Handler $handler, $params)
         {
-            $activityLibrary->message = __('ussd.item_message_quit');
-            $activityLibrary->end = true;
-            return self::activityReturnValidMessage($activityLibrary);
+            $handler->message = __('ussd.item_message_quit');
+            $handler->end = true;
+            return self::activityReturnValidMessage($handler);
         }
     
         // Choose app language
-        public static function activityChooseLanguage(ActivityLibrary $activityLibrary, $params)
+        public static function activityChooseLanguage(Handler $handler, $params)
         {
-            $activityLibrary->message = __('ussd.item_choose_language');
+            $handler->message = __('ussd.item_choose_language');
             $languageLookUp = ['1' => 'en', '2' => 'sw'];
-            $activityLibrary->userInput['localeLookup'] = $languageLookUp;
+            $handler->userInput['localeLookup'] = $languageLookUp;
     
-            $activityLibrary->menuItems = [
+            $handler->menuItems = [
                 '1' => [
                     'text' => __('ussd.item_language_english'),
                     'activity' => 'activityChangeLanguage'
@@ -132,46 +132,48 @@ N/B Treat each a method as a new USSD screen instance
                 ]
             ];
     
-            return self::activityReturnValidMessage($activityLibrary);
+            return self::activityReturnValidMessage($handler);
         }
     
         // Change the app language
-        public static function activityChangeLanguage(ActivityLibrary $activityLibrary, $params)
+        public static function activityChangeLanguage(Handler $handler, $params)
         {
-            if (!collect($activityLibrary->userInput['localeLookup'])->has($activityLibrary->ussdString)) {
-                return self::activityHome($activityLibrary, $params);
+            if (!collect($handler->userInput['localeLookup'])->has($handler->ussdString)) {
+                return self::activityHome($handler, $params);
             }
     
-            $locale = $activityLibrary->userInput['localeLookup'][$activityLibrary->ussdString];
-            $activityLibrary->user->locale = $locale;
-            $activityLibrary->user->save();
+            $locale = $handler->userInput['localeLookup'][$handler->ussdString];
+            $handler->user->locale = $locale;
+            $handler->user->save();
     
-            $activityLibrary->setLang();
+            $handler->setLang();
     
-            $activityLibrary->message = __('ussd.item_locale_saved');
+            $handler->message = __('ussd.item_locale_saved');
     
-            $activityLibrary->menuItems = [
+            $handler->menuItems = [
                 '0' => [
                     'text' => __('ussd.item_navigation_home'),
                     'activity' => 'activityHome'
                 ]
             ];
-            return self::activityReturnValidMessage($activityLibrary);
+            return self::activityReturnValidMessage($handler);
         }
     
         // Returned message
-        public static function activityReturnValidMessage(ActivityLibrary $activityLibrary)
+        public static function activityReturnValidMessage(Handler $handler)
         {
-            if ($activityLibrary->invalidInput) {
-                $activityLibrary->message = __('ussd.enter_valid_input') . " $activityLibrary->ussdString\n$activityLibrary->message";
+            if ($handler->invalidInput) {
+                $handler->message = __('ussd.enter_valid_input') . " $handler->ussdString\n$handler->message";
             }
-            return $activityLibrary;
+            return $handler;
         }
     
         /**
          * ALL YOUR OTHER MENUS WILL BE WRITTEN HERE... FEEL FREE TO PLAY AROUND
          */
     }
+
+
 
 ### Simulator URL
 
