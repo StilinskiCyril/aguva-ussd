@@ -75,7 +75,7 @@ class Handler
         }
     }
 
-    private function setLang()
+    public function setLang()
     {
         App::setLocale('en');
         if (array_key_exists('newUser', $this->userInput)){
