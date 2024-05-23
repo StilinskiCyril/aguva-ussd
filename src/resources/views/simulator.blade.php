@@ -17,7 +17,7 @@
         <div class="card-header">
             <h6 class="text-center"><strong>Aguva USSD Simulator</strong></h6>
 
-            <a href="{{route('test.shows-simulator')}}" class="btn btn-danger">New Session</a>
+            <a href="{{route('test.show-simulator')}}" class="btn btn-danger">New Session</a>
         </div>
 
         <div class="card-body">
