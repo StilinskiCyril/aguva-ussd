@@ -13,21 +13,11 @@ Aguva Ussd is a modern multi-language (english and swahili) laravel dynamic ussd
 
 ## Installation
 
-### Add the following to your root project's composer.json
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/StilinskiCyril/aguva-ussd.git"
-        }
-    ],
-
-### Add the following under 'require' key (list of required pakages) in your root project's composer.json
-
-    "aguva/ussd": "dev-main"
+### Run the following command
+    composer require aguva/ussd:dev-main
 
 ### Publish package support files
     php artisan vendor:publish --provider="Aguva\Ussd\Providers\UssdServiceProvider" --tag=aguva-ussd-lang --force
-
 
 ### Run the migrations
 
