@@ -19,7 +19,7 @@ class OnlineController extends Controller
         ]);
 
         // Log the payload
-        if (config('ussd.restrict_to_whitelist')){
+        if (config('ussd.log_ussd_request')){
             Log::info(json_encode($request->all()));
         }
 
