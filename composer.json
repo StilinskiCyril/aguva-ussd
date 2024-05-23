@@ -1,7 +1,7 @@
 {
     "name": "aguva/ussd",
     "type": "library",
-    "description": "An easy to use Laravel USSD library. The library offers a contemporary and versatile USSD application solution that supports multiple languages, including English and Swahili. Its syntax is expressive and elegant, making it incredibly user-friendly. It features a built-in USSD simulator that simplifies the process of debugging and maintaining the application.",
+    "description": "An easy to use Laravel USSD library. The package provides a modern and adaptable USSD application solution that accommodates various languages, such as English and Swahili, with the option to integrate additional languages as needed. Its syntax is clear and sophisticated, ensuring exceptional user-friendliness. Additionally, it includes a built-in USSD simulator, streamlining the debugging and upkeep of the application.",
     "keywords": [
         "ussd",
         "ussdapplication"

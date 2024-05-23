@@ -9,7 +9,7 @@
 
 ## About Aguva Ussd Package
 
-Aguva Ussd is a modern multi-language (english and swahili) laravel dynamic ussd application framework with expressive, elegant syntax. Very easy to use. It also has a ussd simulator for  easy debugging & maintenance.
+Aguva Ussd is a modern and adaptable USSD application solution that accommodates various languages, such as English and Swahili, with the option to integrate additional languages as needed. Its syntax is clear and sophisticated, ensuring exceptional user-friendliness. Additionally, it includes a built-in USSD simulator, streamlining the debugging and upkeep of the application.
 
 ## Installation
 
