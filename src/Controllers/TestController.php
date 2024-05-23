@@ -6,6 +6,7 @@ use Aguva\Ussd\Repositories\Handler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Aguva\Ussd\Rules\ValidateMsisdn;
+use Illuminate\Routing\Controller;
 
 class TestController extends Controller
 {

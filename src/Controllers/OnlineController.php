@@ -6,6 +6,7 @@ use Aguva\Ussd\Repositories\Handler;
 use Illuminate\Http\Request;
 use Aguva\Ussd\Rules\ValidateMsisdn;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Routing\Controller;
 
 class OnlineController extends Controller
 {
