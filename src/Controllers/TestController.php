@@ -12,7 +12,7 @@ class TestController extends Controller
 {
     // Show the simulator
     public function showSimulator(){
-        return view('ussd-views::simulator', ['input' => ['session_id' => Str::uuid()]]);
+        return view('ussd-views::simulator', ['input' => ['sessionId' => Str::uuid()]]);
     }
 
 
@@ -20,9 +20,9 @@ class TestController extends Controller
     public function processPayload(Request $request)
     {
         $request->validate([
-            'msisdn' => ['required', new ValidateMsisdn(false)],
-            'text' => ['nullable'],
-            'sessionId' => ['required']
+            'msisdn' => ['required', 'string', new ValidateMsisdn(false)],
+            'sessionId' => ['required', 'string'],
+            'text' => ['nullable', 'string']
         ]);
 
         $input = $request->text;

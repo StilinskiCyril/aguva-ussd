@@ -13,9 +13,9 @@ class OnlineController extends Controller
     // Validate and process payload from provider
     function processPayload(Request $request){
         $this->validate($request, [
-            'msisdn' => ['required', new ValidateMsisdn(false)],
-            'text' => ['nullable'],
-            'sessionId' => ['required']
+            'msisdn' => ['required', 'string', new ValidateMsisdn(false)],
+            'sessionId' => ['required', 'string'],
+            'text' => ['nullable', 'string']
         ]);
 
         // Log the payload

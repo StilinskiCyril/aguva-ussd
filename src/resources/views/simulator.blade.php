@@ -17,11 +17,11 @@
         <div class="card-header">
             <h6 class="text-center"><strong>Aguva USSD Simulator</strong></h6>
 
-            <a href="{{route('test.show-simulator')}}" class="btn btn-danger">New Session</a>
+            <a href="{{ route('test.show-simulator') }}" class="btn btn-danger">New Session</a>
         </div>
 
         <div class="card-body">
-            <form action=" {!! route('test.process-payload') !!}" method="post">
+            <form action="{!! route('test.process-payload') !!}" method="post">
                 @csrf
                 <div class="form-group">
                     <label for="fname">Msisdn (254)</label>
@@ -30,12 +30,12 @@
 
                 <div class="form-group">
                     <label for="input">Session Id</label>
-                    <input type="text" id="input" name="session_id" value="{!! @$input['session_id'] !!}" placeholder="ussd session" required class="form-control">
+                    <input type="text" id="input" name="sessionId" value="{!! @$input['sessionId'] !!}" placeholder="ussd session" disabled required class="form-control">
                 </div>
 
                 <div class="form-group easy-get">
                     <label for="text">User Input</label>
-                    <input type="text" name="text" placeholder="user input" required class="form-control"/>
+                    <input type="text" name="text" placeholder="user input" class="form-control"/>
                 </div>
 
                 <input type="submit" class="btn btn-primary btn-block" value="Send Request">
