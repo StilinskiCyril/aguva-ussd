@@ -37,8 +37,8 @@ Aguva Ussd is a modern multi-language (english and swahili) laravel dynamic ussd
 N/B Treat each a method as a new USSD screen instance
 
     <?php
-namespace App\Repositories;
-use Aguva\Ussd\Repositories\Handler;
+    namespace App\Repositories;
+    use Aguva\Ussd\Repositories\Handler;
 
     class UssdProcessor
     {
@@ -170,15 +170,15 @@ use Aguva\Ussd\Repositories\Handler;
     The ussd simulator can be found in the url "/simulator". Kindly note that it mimics a live ussd environment meaning that you have to click "new session" button whenever you want to simulate the start of a new session.
 
 ## Queue Workers Used
-    The choice is totaly up to you. You could use either of the following;
+Make sure you listen to the following queue(s) which is used to save ussd sessions data into the database
+
+    save-ussd-message
+
+You could use either of the following;
 - [redis](https://laravel.com/docs/11.x/queues/)
 - [beanstalkd](https://beanstalkd.github.io/)
 
 N/B Install [horizon console](https://laravel.com/docs/11.x/horizon) or [beanstalkd console](https://github.com/ptrofimov/beanstalk_console) to help you monitor the queues & also install the necessary respective laravel packages.
-
-## Queues Used
-Listen to the following queue in your root project
-- save-ussd-message (used to save ussd sessions data into the database)
 
 ### Uninstallation
 
