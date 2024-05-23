@@ -96,8 +96,8 @@ class Handler
         if ($pendingActivity) {
             $this->attempt = 1;
             $this->currentActivity = $pendingActivity->activity;
-            if (count($pendingActivity->activityData)) {
-                foreach ($pendingActivity->activityData as $item) {
+            if (count($pendingActivity->ussdActivityLogs)) {
+                foreach ($pendingActivity->ussdActivityLogs as $item) {
                     $this->currentActivityData[$item->data]  = $item->value;
                 }
             }
