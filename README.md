@@ -25,11 +25,9 @@ Aguva Ussd is a modern multi-language (english and swahili) laravel dynamic ussd
 
     "aguva/ussd": "dev-main"
 
-### Publish the language files
-    php artisan lang:publish --provider=\"Aguva\\Ussd\\Providers\\UssdServiceProvider\" --tag=aguva-ussd-lang --force
-
 ### Publish package support files
-    php artisan vendor:publish --provider=\"Aguva\\Ussd\\Providers\\UssdServiceProvider\" --force
+    php artisan vendor:publish --provider="Aguva\Ussd\Providers\UssdServiceProvider" --tag=aguva-ussd-lang --force
+
 
 ### Run the migrations
 
