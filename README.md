@@ -36,6 +36,7 @@ Aguva Ussd is a modern and adaptable USSD application solution that accommodates
 ### Create a UssdProcessor.php file in root project's app/Repositories dir & add the following boilerplate code. This is your PLAYGROUND, GO CRAZY
 N/B Treat each a method as a new USSD screen instance
 
+```php
     <?php
     namespace App\Repositories;
     use Aguva\Ussd\Repositories\Handler;
@@ -162,7 +163,7 @@ N/B Treat each a method as a new USSD screen instance
          * ALL YOUR OTHER MENUS WILL BE WRITTEN HERE... FEEL FREE TO PLAY AROUND
          */
     }
-
+```
 
 
 ### Simulator URL
