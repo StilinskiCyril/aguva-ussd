@@ -56,7 +56,7 @@ class Handler
                 'session_id' => $this->sessionId
             ]);
         } catch (\Exception $exception) {
-            Log::info($exception->getMessage());
+            Log::error("(Handler@saveUssdSession) : {$exception->getMessage()}");
         }
     }
 
@@ -144,19 +144,17 @@ class Handler
             $this->next = null;
             call_user_func_array(["App\\Repositories\\UssdProcessor", $this->currentActivity], [$this, $this->currentActivityData]);
         } catch (\Exception $exception) {
-            // Log the exceptions if there are any
             $exceptionString = "AGUVA-USSD EXCEPTION".
                 "\nUSSD String: ". $this->ussdString
-                ."\n Current Activity: ". $this->currentActivity
-                ."\n Original String: ". $this->originalUssdString
-                ."\n UserInput: ". json_encode($this->userInput)
+                ."\nCurrent Activity: ". $this->currentActivity
+                ."\nOriginal String: ". $this->originalUssdString
+                ."\nUserInput: ". json_encode($this->userInput)
                 ."\nMenu Items: ". json_encode($this->menuItems)
                 ."\nMSISDN: ". $this->msisdn
-                ."\nSessionID: ". $this->sessionId
-                ."\nError Message: ".$exception->getMessage()
-                ."\nStackTrace: ".$exception->getTraceAsString();
+                ."\nSessionID: ". $this->sessionId;
 
-            Log::info($exceptionString);
+            Log::error("(Handler@execute) Payload : $exceptionString");
+            Log::error("(Handler@execute) : {$exception->getMessage()}");
             $this->next = null;
             call_user_func_array(["App\\Repositories\\UssdProcessor", 'activityHome'], ['class' => $this, 'data' => []]);
         }

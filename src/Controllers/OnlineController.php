@@ -20,7 +20,7 @@ class OnlineController extends Controller
 
         // Log the payload
         if (config('ussd.log_ussd_request')){
-            Log::info(json_encode($request->all()));
+            Log::info("(OnlineController@processPayload) : ".json_encode($request->all()));
         }
 
         $input = $this->cleanUssd($request->text);
