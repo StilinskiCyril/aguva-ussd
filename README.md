@@ -25,13 +25,30 @@ Aguva Ussd is a modern and adaptable USSD application solution that accommodates
 
 ### Add the following variables in your root project's .env
 
-    DEFAULT_MESSAGE= # The default message to show when no other message is available
-    RESTRICT_TO_WHITELIST=true # Set to false to allow all msisdns
-    LOG_USSD_REQUEST=true # Set to true to log all ussd request payloads from provider
-    WHITELIST_MSISDNS="254705799644" # Comma separated list of msisdns to whitelist
-    END_SESSION_SLEEP_SECONDS=2 # Delay in seconds before ending session
-    USSD_CODE=657 # This is the ussd code given to you by your provider eg 999
-    ONLINE_ENDPOINT='api/process-payload/55034fd5-bd23h5d9948f' # The endpoint to receive ussd payloads from provider
+    ## The default message displayed to users when no other response is available
+    USSD_DEFAULT_MESSAGE=
+
+    ## If set to true, only MSISDNs (phone numbers) in the whitelist are allowed to access the USSD service
+    ## If false, the USSD service is open to all MSISDNs
+    USSD_RESTRICT_TO_WHITELIST=
+
+    ## If set to true, all incoming USSD request payloads from the provider will be logged for tracking and debugging
+    USSD_LOG_REQUEST=
+
+    ## A comma-separated list of MSISDNs (phone numbers) that are allowed to access the USSD service
+    ## Only applicable if 'USSD_RESTRICT_TO_WHITELIST' is set to true
+    USSD_WHITELIST_MSISDNS=
+
+    ## The number of seconds to wait before ending a USSD session
+    ## Some providers require a slight delay before terminating the session
+    USSD_END_SESSION_SLEEP_SECONDS=
+
+    ## The USSD code assigned by your service provider (e.g., *999#)
+    USSD_CODE=
+
+    ## The API endpoint that receives USSD request payloads from the provider
+    ## This should be a valid URL where the USSD server can forward incoming requests
+    USSD_ONLINE_ENDPOINT='api/process-payload/55034fd5-bd23h5d9948f'
 
 ### Create a UssdProcessor.php file in root project's app/Repositories dir & add the following boilerplate code. This is your PLAYGROUND, GO CRAZY
 N/B Treat each a method as a new USSD screen instance
