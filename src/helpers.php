@@ -6,7 +6,7 @@ use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 
 // Validate msisdn/ phone number
-function validateMsisdn($msisdn, $region)
+function validateMsisdn($msisdn, $region): array
 {
     $phoneUtil = PhoneNumberUtil::getInstance();
     try {
@@ -32,8 +32,8 @@ function validateMsisdn($msisdn, $region)
 }
 
 // Generate random integer
-if (!function_exists('generateRandomInt')){
-    function generateRandomInt($noOfDigits = 6)
+if (!function_exists('generateRandomInteger')){
+    function generateRandomInteger($noOfDigits = 6): string
     {
         $i = 0;
         $result = "";
@@ -47,7 +47,8 @@ if (!function_exists('generateRandomInt')){
 
 // Save new user
 if (!function_exists('saveUser')){
-    function saveUser($userData){
+    function saveUser($userData): void
+    {
         UssdUser::create([
             'msisdn' => $userData['msisdn']
         ]);

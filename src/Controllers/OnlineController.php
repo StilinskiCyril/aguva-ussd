@@ -11,7 +11,8 @@ use Illuminate\Routing\Controller;
 class OnlineController extends Controller
 {
     // Validate and process payload from provider
-    function processPayload(Request $request){
+    function processPayload(Request $request): string
+    {
         $this->validate($request, [
             'msisdn' => ['required', 'string', new ValidateMsisdn(false)],
             'sessionId' => ['required', 'string'],

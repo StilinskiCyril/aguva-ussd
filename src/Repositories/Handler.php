@@ -49,7 +49,7 @@ class Handler
         $this->saveUssdActivity();
     }
 
-    private function saveUssdSession()
+    private function saveUssdSession(): void
     {
         try {
             UssdSession::create([
@@ -60,7 +60,8 @@ class Handler
         }
     }
 
-    private function loadUser(){
+    private function loadUser(): void
+    {
         $this->user = UssdUser::where('msisdn', $this->msisdn)->first();
 
         if ($this->user){
@@ -75,7 +76,7 @@ class Handler
         }
     }
 
-    public function setLang()
+    public function setLang(): void
     {
         App::setLocale('en');
         if (array_key_exists('newUser', $this->userInput)){
@@ -207,7 +208,8 @@ class Handler
         $activity->ussdActivityLogs()->saveMany([$data, $userInputs, $nextDefault]);
     }
 
-    private function archivePrevious(): void{
+    private function archivePrevious(): void
+    {
         UssdActivity::where('msisdn', $this->msisdn)->update([
             'status' => true
         ]);
@@ -228,7 +230,8 @@ class Handler
         return $data;
     }
 
-    public function finalResponse(): array{
+    public function finalResponse(): array
+    {
         $finalResponse = '';
         $finalResponse .= strlen($this->message) ? $this->message : $this->defaultMessage;
         $finalResponse .= "\n";
@@ -248,7 +251,8 @@ class Handler
         ];
     }
 
-    private function buildMenu(): string{
+    private function buildMenu(): string
+    {
         $str = '';
         foreach ($this->menuItems as $k => $menuItem) {
             $str .= $k.'. '.$menuItem['text']."\n";

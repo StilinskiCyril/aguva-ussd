@@ -7,11 +7,11 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 class ValidateMsisdn implements ValidationRule
 {
-    public $uniqueCheck;
-    public $model;
-    public $region;
-    public $column;
-    public $sourceParam;
+    public mixed $uniqueCheck;
+    public mixed $model;
+    public mixed $region;
+    public mixed $column;
+    public mixed $sourceParam;
 
 
     public function __construct($uniqueCheck = true, $model = 'User', $region = 'KE', $column = 'msisdn', $sourceParam = 'msisdn')
@@ -34,13 +34,13 @@ class ValidateMsisdn implements ValidationRule
         $validation = validateMsisdn($value, $this->region);
 
         if (!$validation['isValid']) {
-            $fail('Phone number '.$validation['msisdn']. ' is invalid');
+            $fail('Phone number '.$validation['msisdn']. ' is invalid.');
         }
 
         if ($this->uniqueCheck){
             $record = $this->model::where($this->column, $validation['msisdn'])->first();
             if ($record) {
-                $fail('Phone number '.$validation['msisdn']. ' already taken');
+                $fail('Phone number '.$validation['msisdn']. ' already taken.');
             }
         }
 

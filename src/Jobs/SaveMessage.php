@@ -32,7 +32,7 @@ class SaveMessage implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         UssdMessage::create($this->data);
     }
