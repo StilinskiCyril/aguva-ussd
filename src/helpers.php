@@ -49,8 +49,7 @@ if (!function_exists('generateRandomInt')){
 if (!function_exists('saveUser')){
     function saveUser($userData){
         UssdUser::create([
-            'msisdn' => $userData['msisdn'],
-            'locale' => 'en'
+            'msisdn' => $userData['msisdn']
         ]);
     }
 }
