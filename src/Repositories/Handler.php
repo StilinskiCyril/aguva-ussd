@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Aguva\Ussd\Repositories;
 
 use Illuminate\Support\Facades\Hash;
@@ -15,24 +17,24 @@ use Aguva\Ussd\Models\UssdUser;
 
 class Handler
 {
-    public $msisdn;
-    public $sessionId;
-    public $invalidInput = false;
-    public $ussdString;
-    public $originalUssdString;
-    public $currentActivity;
-    public $currentActivityData = [];
-    public $message = '';
-    public $next = null;
-    public $userInput = [];
-    public $defaultMessage;
-    public $menuItems = [];
-    public $user;
-    public $end = false;
-    public $attempt = 0;
-    public $activityId = null;
+    public string $msisdn;
+    public string $sessionId;
+    public bool $invalidInput = false;
+    public string $ussdString;
+    public string $originalUssdString;
+    public ?string $currentActivity;
+    public array $currentActivityData = [];
+    public string $message = '';
+    public ?string $next = null;
+    public array $userInput = [];
+    public string $defaultMessage;
+    public array $menuItems = [];
+    public ?UssdUser $user;
+    public bool $end = false;
+    public int $attempt = 0;
+    public ?int $activityId = null;
 
-    public function __construct($msisdn, $sessionId, $ussdString, $originalUssdString)
+    public function __construct(string $msisdn, string $sessionId, string $ussdString, string $originalUssdString)
     {
         $this->msisdn = $msisdn;
         $this->ussdString = $ussdString;
@@ -53,7 +55,7 @@ class Handler
     {
         try {
             UssdSession::create([
-                'session_id' => $this->sessionId
+                'session_id' => $this->sessionId,
             ]);
         } catch (\Exception $exception) {
             Log::error("(Handler@saveUssdSession) : {$exception->getMessage()}");
@@ -62,13 +64,13 @@ class Handler
 
     private function loadUser(): void
     {
-        $this->user = UssdUser::where('msisdn', $this->msisdn)->first();
+        $this->user = UssdUser::query()->where('msisdn', $this->msisdn)->first();
 
         if ($this->user){
             $this->userInput['newUser'] = false;
-        }else {
+        } else {
             $userData = [
-                'msisdn'    => $this->msisdn
+                'msisdn'    => $this->msisdn,
             ];
             // Save new user
             saveUser($userData);
@@ -88,7 +90,7 @@ class Handler
 
     private function loadPendingUssdActivity(): void
     {
-        $pendingActivity = UssdActivity::with(['ussdActivityLogs'])
+        $pendingActivity = UssdActivity::query()->with(['ussdActivityLogs'])
             ->where('msisdn', $this->msisdn)
             ->where('session_id', $this->sessionId)
             ->where('status', false)
@@ -121,8 +123,8 @@ class Handler
             if (!isset($activities)) {
                 return;
             }
-            $activities = (array)json_decode($activities);
 
+            $activities = (array)json_decode($activities);
             if (count($activities) > 1) {
                 if (!$this->checkValidMenuInput($activities)) {
                     $this->invalidInput = true;
@@ -177,7 +179,7 @@ class Handler
         $activity = UssdActivity::create([
             'activity' => $this->currentActivity,
             'msisdn' => $this->msisdn,
-            'session_id' => $this->sessionId
+            'session_id' => $this->sessionId,
         ]);
 
         $this->activityId = $activity->id;
@@ -187,17 +189,17 @@ class Handler
             'session_id' => $this->sessionId,
             'ussd_activity_id' => $this->activityId,
             'direction' => 'in',
-            'message' => $this->ussdString
+            'message' => $this->ussdString,
         ])->onQueue('save-ussd-message');
 
         $data = UssdActivityLog::create([
             'data'   => 'nextActivities',
-            'value' => json_encode($this->menuToData())
+            'value' => json_encode($this->menuToData()),
         ]);
 
         $userInputs = UssdActivityLog::create([
             'data' => 'userinputs',
-            'value' => json_encode($this->userInput)
+            'value' => json_encode($this->userInput),
         ]);
 
         $nextDefault = UssdActivityLog::create([
@@ -210,8 +212,8 @@ class Handler
 
     private function archivePrevious(): void
     {
-        UssdActivity::where('msisdn', $this->msisdn)->update([
-            'status' => true
+        UssdActivity::query()->where('msisdn', $this->msisdn)->update([
+            'status' => true,
         ]);
     }
 
@@ -242,7 +244,7 @@ class Handler
             'session_id' => $this->sessionId,
             'ussd_activity_id' => $this->activityId,
             'direction' => 'out',
-            'message' => $finalResponse
+            'message' => $finalResponse,
         ])->onQueue('save-ussd-message');
 
         return [

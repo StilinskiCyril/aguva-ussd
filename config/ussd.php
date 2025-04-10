@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     // The default message displayed to users when no other response is available
     'default_message' => env('USSD_DEFAULT_MESSAGE', 'Aguva USSD'),
@@ -24,5 +26,5 @@ return [
 
     // The API endpoint that receives USSD request payloads from the provider
     // This should be a valid URL where the USSD server can forward incoming requests
-    'online_endpoint' => env('USSD_ONLINE_ENDPOINT', 'api/process-payload/55034fd5-bd23h5d9948f')
+    'online_endpoint' => env('USSD_ONLINE_ENDPOINT', 'api/process-payload/55034fd5-bd23h5d9948f'),
 ];

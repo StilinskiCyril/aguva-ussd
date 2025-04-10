@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Aguva\Ussd\Controllers;
 
 use Aguva\Ussd\Repositories\Handler;
@@ -20,9 +22,9 @@ class TestController extends Controller
     public function processPayload(Request $request)
     {
         $request->validate([
-            'msisdn' => ['required', 'string', new ValidateMsisdn(false)],
-            'sessionId' => ['required', 'string'],
-            'text' => ['nullable', 'string']
+            'msisdn' => ['required', 'string', new ValidateMsisdn(false), 'max:255'],
+            'sessionId' => ['required', 'string', 'max:255'],
+            'text' => ['nullable', 'string', 'max:255'],
         ]);
 
         $input = $request->text;

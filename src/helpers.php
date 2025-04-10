@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use Aguva\Ussd\Models\UssdUser;
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 
-// Validate msisdn/ phone number
 function validateMsisdn($msisdn, $region): array
 {
     $phoneUtil = PhoneNumberUtil::getInstance();
@@ -16,41 +17,41 @@ function validateMsisdn($msisdn, $region): array
             $msisdn = $phoneUtil->format($kenyaNumberProto, PhoneNumberFormat::E164);
             return [
                 'isValid' => $isValid,
-                'msisdn' => substr($msisdn, 1)
+                'msisdn' => substr($msisdn, 1),
             ];
         }
         return [
             'isValid' => $isValid,
-            'msisdn' => $msisdn
+            'msisdn' => $msisdn,
         ];
     } catch (NumberParseException $e) {
         return [
             'isValid' => false,
-            'msisdn' => $msisdn
+            'msisdn' => $msisdn,
         ];
     }
 }
 
-// Generate random integer
 if (!function_exists('generateRandomInteger')){
     function generateRandomInteger($noOfDigits = 6): string
     {
         $i = 0;
         $result = "";
+
         while($i < $noOfDigits){
             $result .= mt_rand(0, 9);
             $i++;
         }
+
         return $result;
     }
 }
 
-// Save new user
 if (!function_exists('saveUser')){
     function saveUser($userData): void
     {
         UssdUser::create([
-            'msisdn' => $userData['msisdn']
+            'msisdn' => $userData['msisdn'],
         ]);
     }
 }

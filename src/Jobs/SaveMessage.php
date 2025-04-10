@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Aguva\Ussd\Jobs;
 
 use Aguva\Ussd\Models\UssdMessage;
@@ -13,16 +15,17 @@ class SaveMessage implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $data;
-
-    public $tries = 1;
+    /**
+     * @var array<string, mixed>
+     */
+    protected array $data;
 
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param  array<string, mixed>  $data
      */
-    public function __construct($data)
+    public function __construct(array $data)
     {
         $this->data = $data;
     }

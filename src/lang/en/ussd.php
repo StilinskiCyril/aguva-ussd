@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     'default_message' => "Welcome to Aguva Ussd Library",
